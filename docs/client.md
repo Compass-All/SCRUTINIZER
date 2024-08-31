@@ -28,11 +28,11 @@ sc_user_client -o reg -d
 
 #### Memory traps 
 
+First set the target tarpped memory address, e.g., for insepcting the hafnimum's exception vector table. 
 
+When a trap occurs, the Monitor currently dumps the target memory and registers by default.
 
 ```
-#first set the target tarpped memory address, e.g., for insepcting the hafnimum's exception vector table. When a trap occurs, the Monitor currently dumps the target memory and registers by default.
-
 //e.g., watchpoint
 sc_user_client -m -e 0x2 -a 0x6000800 -s 2048 -w 0x630df28 
 
@@ -66,4 +66,4 @@ sc_user_client -i 2 -d
 
 ```
 
-ETE decode. Download `ins_dump` to `<SCRUTINIZER-REPO>/scripts/trace` and rename it to `trace_data.bin`. Run `/scripts/test-ete-decode.sh` to get the decoded ETE trace within `trace_decode.ppl`.
+ETE decode. Download `ins_dump` to `<SCRUTINIZER-REPO>/scripts/trace` and rename it to `trace_data.bin`. Run `/scripts/test-ete-decode.sh` to get the decoded ETE trace within 'scripts/trace/decode.txt `.
