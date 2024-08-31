@@ -1,0 +1,74 @@
+/*
+ * Copyright (c) 2020-2021, Arm Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+/dts-v1/;
+
+#define	AFF	00
+
+#include "fvp-defs.dtsi"
+#undef POST
+#define	POST \
+	};
+
+/ {
+	compatible = "arm,ffa-core-manifest-1.0";
+	#address-cells = <2>;
+	#size-cells = <1>;
+/*
+INFO: Initializing Hafnium (SPMC)
+INFO: text: 0x6000000 - 0x6026000
+INFO: rodata: 0x6026000 - 0x602d000
+INFO: data: 0x602d000 - 0x6116000
+INFO: stacks: 0x6120000 - 0x6130000
+INFO: Supported bits in physical address: 48
+INFO: Stage 2 has 4 page table levels with 1 pages at the root.
+INFO: Stage 1 has 4 page table levels with 1 pages at the root.
+INFO: Memory range:  0x6000000 - 0x7ffffff
+*/
+	attribute {
+		spmc_id = <0x8000>;
+		maj_ver = <0x1>;
+		min_ver = <0x1>;
+		exec_state = <0x0>;
+		load_address = <0x0 0x6000000>; //SEL2 hafnium load PA range 0x6000000:0x6080000
+		entrypoint = <0x0 0x6000000>;
+		binary_size = <0x80000>;
+	};
+
+	hypervisor {
+		compatible = "hafnium,hafnium";
+		vm1 {
+			is_ffa_partition;
+			debug_name = "op-tee";
+			load_address = <0x6280000>; //SEL1 optee os load PA range 0x6280000 - 0x8000000
+			vcpu_count = <8>;
+			mem_size = <0xF7980000>; //used by stage 2 page init, we cover the Secure DRAM before FDC00000 (RMM base address) 0xF7980000
+		};
+	};
+
+	cpus {
+		#address-cells = <0x2>;
+		#size-cells = <0x0>;
+
+		CPU_0
+
+		/*
+		 * SPMC (Hafnium) requires secondary core nodes are declared
+		 * in descending order.
+		 */
+		CPU_7
+		CPU_6
+		CPU_5
+		CPU_4
+		CPU_3
+		CPU_2
+		CPU_1
+	};
+
+	memory@6000000 {
+		device_type = "memory";
+		reg = <0x0 0x6000000 0x2000000>; /* Trusted DRAM */
+	};
+};

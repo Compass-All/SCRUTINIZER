@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "scrutinizer.h": "c",
+        "array": "c",
+        "functional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "arm_gicv3_common.h": "c",
+        "gicv3.h": "c",
+        "gic_common_private.h": "c",
+        "xlat_tables_v2.h": "c",
+        "arm_pas_def.h": "c",
+        "gpt_rme.h": "c"
+    }
+}
