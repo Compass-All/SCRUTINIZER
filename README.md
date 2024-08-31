@@ -18,17 +18,17 @@ Run `scripts/build.sh all` to build the components.
 
 or Run `scripts/build.sh <target>` to build a specific component.
 
-## 3. Test SCRUTINIZER 
+## 3. Run 
 
 ### Lanuch FVP
 
-Run `./scripts/bootfvp.sh` to lanuch the FVP.
+Run `./scripts/bootfvp.sh` to lanuch the FVP. The FVP linux's user and password are `root`.
 
 ### Client
 
 For ease of testing, there is a local client that can invoke the functionalities of SCRUTINIZER Monitor.
 
-#### Compile and upload to FVP
+#### In your host, compile and upload to FVP
 ```shell
 cd src/sc_client/
 make
@@ -46,7 +46,7 @@ In FVP linux terminal, load the kernel module:
  insmod sc_manager.ko
 ```
 
-Run the client to test. More details in [client.md](https://www.example.com).
+Run the client to test. More details in [client.md](/docs/client.md).
 
 ```
 sc_user_client -h

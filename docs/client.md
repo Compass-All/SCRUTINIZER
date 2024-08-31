@@ -1,14 +1,15 @@
 #### Memory acquisition 
 
 ```
-#first inspect the target memory, e.g., the hafnimum's exception vector table
-sc_user_client -m -e 0x2 -a 0x6000800 -s 2048
+#inspect the target memory, e.g., the hafnimum's exception vector table. Up to 20MB at a time.
+sc_user_client -m -e 0x2 -a 0x6000800 -s 2048 //VA by deafult, or add `-p 1` to use PA access.
 
-#then save the dump to file named mem_dump
-sc_user_client -o mem
-
-#or decrypt the dump and save it to file
+#then decrypt the memory dump and save it to a file named `mem_dump`
 sc_user_client -o mem -d
+
+#show the content
+
+hexdump -C <file>
 
 ```
 
@@ -27,19 +28,24 @@ sc_user_client -o reg -d
 
 #### Memory traps 
 
+
+
 ```
-#first set the target tarpped memory address, e.g., for insepcting the hafnimum's exception vector table 
+#first set the target tarpped memory address, e.g., for insepcting the hafnimum's exception vector table. When a trap occurs, the Monitor currently dumps the target memory and registers by default.
+
+//e.g., watchpoint
 sc_user_client -m -e 0x2 -a 0x6000800 -s 2048 -w 0x630df28 
 
 or
 
+//breakpoint
 sc_user_client -m -e 0x2 -a 0x6000800 -s 2048 -b 0x62d462c
 
-#run a TA to exectue the TrustZone system. When a trap occurs, the Monitor currently dumps the target memory and registers by default.
+#run a TA to exectue the TrustZone system, then a trap will be hitted.
 tee-supplicant -d
 /root/optee_example_hello_world
 
-#save the dump to file
+#decrypt and save dump to file
 sc_user_client -o mem -d
 sc_user_client -o reg -d
 
