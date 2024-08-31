@@ -1,0 +1,8 @@
+.DS_Store
+.vscode
+*.ext4
+
+/dev_workspace/
+/debug/
+/scripts/trace/trace_data.bin
+/scripts/trace/decode.txt
